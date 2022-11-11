@@ -1,0 +1,150 @@
+--1--
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO, ahmedinova_gender.name, ahmedinova_otdel.name 
+FROM ahmedinova_user
+JOIN ahmedinova_teacher ON ahmedinova_user.user_id=ahmedinova_teacher.user_id
+JOIN ahmedinova_gender ON ahmedinova_user.gender_id=ahmedinova_gender.gender_id
+JOIN ahmedinova_otdel ON ahmedinova_teacher.otdel_id=ahmedinova_otdel.otdel_id
+WHERE ahmedinova_otdel.name='Информационные системы';
+
+--2--
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO, ahmedinova_gruppa.name, ahmedinova_special.name FROM ahmedinova_user
+JOIN ahmedinova_student ON ahmedinova_student.user_id = ahmedinova_user.user_id
+JOIN ahmedinova_gruppa ON ahmedinova_gruppa.gruppa_id = ahmedinova_student.gruppa_id
+JOIN ahmedinova_special ON ahmedinova_special.special_id = ahmedinova_gruppa.special_id
+WHERE ahmedinova_special.otdel_id = 1
+
+--3--
+SELECT ahmedinova_course.name, ahmedinova_course.hours, ahmedinova_special.name FROM ahmedinova_course 
+JOIN ahmedinova_special ON ahmedinova_special.special_id = ahmedinova_course.special_id
+WHERE ahmedinova_special.otdel_id = 2
+
+--4--
+SELECT ahmedinova_gruppa.name, ahmedinova_gruppa.date_begin, ahmedinova_gruppa.date_end 
+FROM ahmedinova_gruppa
+WHERE ahmedinova_gruppa.special_id = 1 
+
+--5--
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO, ahmedinova_gruppa.name
+FROM ahmedinova_gruppa
+JOIN ahmedinova_student ON ahmedinova_student.gruppa_id = ahmedinova_gruppa.gruppa_id
+JOIN ahmedinova_user ON ahmedinova_user.user_id = ahmedinova_student.user_id
+JOIN ahmedinova_special ON ahmedinova_special.special_id = ahmedinova_gruppa.special_id
+JOIN ahmedinova_course ON ahmedinova_course.special_id = ahmedinova_special.special_id
+WHERE ahmedinova_course.name = 'Мультимедиа технология'
+
+--6--
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO, ahmedinova_course.name, ahmedinova_course.hours, ahmedinova_gruppa.name
+FROM ahmedinova_user
+JOIN ahmedinova_teacher ON ahmedinova_user.user_id = ahmedinova_teacher.user_id
+JOIN ahmedinova_graduate ON ahmedinova_graduate.user_id = ahmedinova_teacher.user_id
+JOIN ahmedinova_gruppa ON ahmedinova_gruppa.gruppa_id = ahmedinova_graduate.gruppa_id
+JOIN ahmedinova_course ON ahmedinova_course.course_id = ahmedinova_graduate.course_id
+JOIN ahmedinova_graduate_time ON ahmedinova_graduate_time.graduate_id = ahmedinova_graduate.graduate_id
+JOIN ahmedinova_lesson_num ON ahmedinova_lesson_num.lesson_num_id = ahmedinova_graduate_time.lesson_num_id
+WHERE ahmedinova_lesson_num.time_lesson BETWEEN '08:30:00' AND '15:00:00';
+
+--7-- 
+SELECT COUNT(*), 
+ahmedinova_otdel.name 
+FROM ahmedinova_otdel
+JOIN ahmedinova_special ON ahmedinova_special.otdel_id = ahmedinova_otdel.otdel_id
+
+JOIN ahmedinova_gruppa ON ahmedinova_gruppa.special_id = ahmedinova_special.special_id
+JOIN ahmedinova_graduate ON ahmedinova_graduate.gruppa_id = ahmedinova_gruppa.gruppa_id
+GROUP BY ahmedinova_otdel.name
+
+--8--
+SELECT COUNT(*), ahmedinova_otdel.name 
+FROM ahmedinova_otdel 
+JOIN ahmedinova_special ON ahmedinova_special.otdel_id = ahmedinova_otdel.otdel_id
+JOIN ahmedinova_course ON ahmedinova_special.special_id = ahmedinova_course.special_id
+GROUP BY ahmedinova_otdel.otdel_id
+
+
+--12--
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO
+FROM ahmedinova_student 
+JOIN ahmedinova_user ON ahmedinova_student.user_id=ahmedinova_user.user_id
+JOIN ahmedinova_gender ON ahmedinova_user.gender_id=ahmedinova_gender.gender_id 
+JOIN ahmedinova_gruppa ON ahmedinova_student.gruppa_id=ahmedinova_gruppa.gruppa_id
+
+JOIN ahmedinova_graduate ON ahmedinova_graduate.gruppa_id=ahmedinova_gruppa.gruppa_id
+JOIN ahmedinova_graduate_time ON ahmedinova_graduate.graduate_id=ahmedinova_graduate_time.graduate_id
+JOIN ahmedinova_lesson_num ON ahmedinova_graduate_time.lesson_num_id=ahmedinova_lesson_num.lesson_num_id
+WHERE ahmedinova_lesson_num.time_lesson 
+BETWEEN '10:30:00' AND '18:30:00' AND ahmedinova_gender.gender_id=2
+
+--13--
+SELECT ahmedinova_course.name
+FROM ahmedinova_course 
+JOIN ahmedinova_graduate ON ahmedinova_course.course_id=ahmedinova_graduate.course_id
+JOIN ahmedinova_graduate_time ON ahmedinova_graduate.graduate_id=ahmedinova_graduate_time.graduate_id
+JOIN ahmedinova_lesson_num ON ahmedinova_graduate_time.lesson_num_id=ahmedinova_lesson_num.lesson_num_id 
+WHERE ahmedinova_lesson_num.time_lesson BETWEEN '12:10:00' AND '18:50:00'
+
+--14--
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO 
+FROM ahmedinova_student
+JOIN ahmedinova_user ON ahmedinova_user.user_id = ahmedinova_student.user_id
+JOIN ahmedinova_gruppa ON ahmedinova_student.gruppa_id =ahmedinova_gruppa.gruppa_id
+JOIN ahmedinova_graduate ON ahmedinova_graduate.gruppa_id = ahmedinova_gruppa.gruppa_id
+JOIN ahmedinova_graduate_time ON ahmedinova_graduate_time.graduate_id = ahmedinova_graduate.graduate_id
+JOIN ahmedinova_day ON ahmedinova_day.day_id = ahmedinova_graduate_time.day_id
+WHERE ahmedinova_day.name = 'Пятница'
+
+
+--16-- 
+
+SELECT ahmedinova_special.name 
+FROM ahmedinova_special
+JOIN ahmedinova_course ON ahmedinova_course.special_id = ahmedinova_special.special_id
+JOIN ahmedinova_graduate ON ahmedinova_graduate.course_id = ahmedinova_course.course_id
+JOIN ahmedinova_graduate_time ON ahmedinova_graduate_time.graduate_id = ahmedinova_graduate.graduate_id
+JOIN ahmedinova_day ON ahmedinova_day.day_id = ahmedinova_graduate_time.day_id
+WHERE ahmedinova_day.name = 'Вторник'
+
+--17--
+
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO , ahmedinova_otdel.name 
+FROM ahmedinova_teacher
+JOIN ahmedinova_user ON ahmedinova_user.user_id = ahmedinova_teacher.user_id
+JOIN ahmedinova_otdel ON ahmedinova_otdel.otdel_id = ahmedinova_teacher.otdel_id
+JOIN ahmedinova_graduate ON ahmedinova_graduate.user_id = ahmedinova_teacher.user_id
+JOIN ahmedinova_graduate_time ON ahmedinova_graduate_time.graduate_id = ahmedinova_graduate.graduate_id
+JOIN ahmedinova_day ON ahmedinova_day.day_id = ahmedinova_graduate_time.day_id
+WHERE ahmedinova_day.name = 'Суббота'
+
+--18--
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO , ahmedinova_gruppa.name, ahmedinova_special.name 
+FROM ahmedinova_student 
+JOIN ahmedinova_user ON ahmedinova_student.user_id=ahmedinova_user.user_id
+JOIN ahmedinova_gruppa ON ahmedinova_student.gruppa_id=ahmedinova_gruppa.gruppa_id
+JOIN ahmedinova_special ON ahmedinova_gruppa.special_id=ahmedinova_special.special_id
+JOIN ahmedinova_graduate ON ahmedinova_gruppa.gruppa_id=ahmedinova_graduate.gruppa_id
+JOIN ahmedinova_course ON ahmedinova_graduate.course_id=ahmedinova_course.course_id
+
+WHERE ahmedinova_course.hours>12
+
+--19--
+
+SELECT ahmedinova_course.name, ahmedinova_course.hours, ahmedinova_special.name, ahmedinova_otdel.name 
+FROM ahmedinova_course 
+JOIN ahmedinova_special ON ahmedinova_course.special_id=ahmedinova_special.special_id
+JOIN ahmedinova_otdel ON ahmedinova_special.otdel_id=ahmedinova_otdel.otdel_id 
+JOIN ahmedinova_graduate ON ahmedinova_course.course_id=ahmedinova_graduate.course_id
+JOIN ahmedinova_graduate_time ON ahmedinova_graduate.graduate_id=ahmedinova_graduate_time.graduate_id
+JOIN ahmedinova_day ON ahmedinova_graduate_time.day_id=ahmedinova_day.name
+WHERE ahmedinova_otdel.otdel_id=2 AND ahmedinova_day.name= 'Среда' AND 'Пятница'
+
+--22--
+SELECT ahmedinova_special.name, ahmedinova_lesson_num.name, ahmedinova_day.name 
+FROM ahmedinova_special 
+JOIN ahmedinova_course ON ahmedinova_special.special_id=ahmedinova_course.special_id
+JOIN ahmedinova_graduate ON ahmedinova_course.course_id=ahmedinova_graduate.course_id
+JOIN ahmedinova_graduate_time ON ahmedinova_graduate.graduate_id=ahmedinova_graduate_time.graduate_id
+JOIN ahmedinova_lesson_num ON ahmedinova_graduate_time.lesson_num_id=ahmedinova_lesson_num.lesson_num_id 
+JOIN ahmedinova_day ON ahmedinova_graduate_time.day_id=ahmedinova_day.day_id
+WHERE ahmedinova_lesson_num.time_lesson BETWEEN '15:00:00' AND '18:00:00'
+AND ahmedinova_day.day_id BETWEEN 4 AND 6
+
+
