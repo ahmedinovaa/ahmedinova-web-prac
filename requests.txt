@@ -114,7 +114,7 @@ WHERE ahmedinova_day.name = 'Пятница'
 SELECT ahmedinova_day.name 
 FROM ahmedinova_day 
 LEFT OUTER JOIN ahmedinova_graduate_time ON ahmedinova_graduate_time.day_id = ahmedinova_day.day_id
-WHERE ahmedinova_graduate_time.day_id IS null
+WHERE ahmedinova_graduate_time.day_id IS NULL
 
 --16-- 
 
