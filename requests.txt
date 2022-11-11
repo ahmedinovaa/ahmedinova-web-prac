@@ -59,7 +59,24 @@ FROM ahmedinova_otdel
 JOIN ahmedinova_special ON ahmedinova_special.otdel_id = ahmedinova_otdel.otdel_id
 JOIN ahmedinova_course ON ahmedinova_special.special_id = ahmedinova_course.special_id
 GROUP BY ahmedinova_otdel.otdel_id
+--9--
+SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO
+FROM ahmedinova_teacher 
+JOIN ahmedinova_user ON ahmedinova_user.user_id = ahmedinova_teacher.user_id
+ JOIN ahmedinova_graduate ON ahmedinova_graduate.user_id = ahmedinova_teacher.user_id
+WHERE ahmedinova_graduate.user_id IS NULL
 
+--10--
+SELECT ahmedinova_course.name 
+FROM ahmedinova_course 
+LEFT OUTER JOIN ahmedinova_graduate ON ahmedinova_graduate.course_id = ahmedinova_course.course_id
+WHERE ahmedinova_graduate.course_id IS NULL
+
+--11--
+SELECT ahmedinova_special.name 
+FROM ahmedinova_special
+LEFT OUTER JOIN ahmedinova_course ON ahmedinova_course.special_id = ahmedinova_special.special_id
+WHERE ahmedinova_course.special_id IS NULL
 
 --12--
 SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO
@@ -92,6 +109,12 @@ JOIN ahmedinova_graduate_time ON ahmedinova_graduate_time.graduate_id = ahmedino
 JOIN ahmedinova_day ON ahmedinova_day.day_id = ahmedinova_graduate_time.day_id
 WHERE ahmedinova_day.name = 'Пятница'
 
+--15--
+
+SELECT ahmedinova_day.name 
+FROM ahmedinova_day 
+LEFT OUTER JOIN ahmedinova_graduate_time ON ahmedinova_graduate_time.day_id = ahmedinova_day.day_id
+WHERE ahmedinova_graduate_time.day_id IS null
 
 --16-- 
 
