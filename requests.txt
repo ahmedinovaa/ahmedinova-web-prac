@@ -159,15 +159,6 @@ JOIN ahmedinova_graduate_time ON ahmedinova_graduate.graduate_id=ahmedinova_grad
 JOIN ahmedinova_day ON ahmedinova_graduate_time.day_id=ahmedinova_day.name
 WHERE ahmedinova_otdel.otdel_id=2 AND ahmedinova_day.name= 'Среда' AND 'Пятница'
 
---22--
-SELECT ahmedinova_special.name, ahmedinova_lesson_num.name, ahmedinova_day.name 
-FROM ahmedinova_special 
-JOIN ahmedinova_course ON ahmedinova_special.special_id=ahmedinova_course.special_id
-JOIN ahmedinova_graduate ON ahmedinova_course.course_id=ahmedinova_graduate.course_id
-JOIN ahmedinova_graduate_time ON ahmedinova_graduate.graduate_id=ahmedinova_graduate_time.graduate_id
-JOIN ahmedinova_lesson_num ON ahmedinova_graduate_time.lesson_num_id=ahmedinova_lesson_num.lesson_num_id 
-JOIN ahmedinova_day ON ahmedinova_graduate_time.day_id=ahmedinova_day.day_id
-WHERE ahmedinova_lesson_num.time_lesson BETWEEN '15:00:00' AND '18:00:00'
-AND ahmedinova_day.day_id BETWEEN 4 AND 6
+
 
 
