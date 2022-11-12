@@ -78,19 +78,6 @@ FROM ahmedinova_special
 LEFT OUTER JOIN ahmedinova_course ON ahmedinova_course.special_id = ahmedinova_special.special_id
 WHERE ahmedinova_course.special_id IS NULL
 
---12--
-SELECT CONCAT (ahmedinova_user.lastname, ' ', ahmedinova_user.firstname, ' ', ahmedinova_user.patronomic) AS FIO
-FROM ahmedinova_student 
-JOIN ahmedinova_user ON ahmedinova_student.user_id=ahmedinova_user.user_id
-JOIN ahmedinova_gender ON ahmedinova_user.gender_id=ahmedinova_gender.gender_id 
-JOIN ahmedinova_gruppa ON ahmedinova_student.gruppa_id=ahmedinova_gruppa.gruppa_id
-
-JOIN ahmedinova_graduate ON ahmedinova_graduate.gruppa_id=ahmedinova_gruppa.gruppa_id
-JOIN ahmedinova_graduate_time ON ahmedinova_graduate.graduate_id=ahmedinova_graduate_time.graduate_id
-JOIN ahmedinova_lesson_num ON ahmedinova_graduate_time.lesson_num_id=ahmedinova_lesson_num.lesson_num_id
-WHERE ahmedinova_lesson_num.time_lesson 
-BETWEEN '10:30:00' AND '18:30:00' AND ahmedinova_gender.gender_id=2
-
 --13--
 SELECT ahmedinova_course.name
 FROM ahmedinova_course 
