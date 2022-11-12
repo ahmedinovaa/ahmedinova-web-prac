@@ -453,7 +453,7 @@ ALTER TABLE `ahmedinova_course`
 
 --
 -- AUTO_INCREMENT для таблицы `ahmedinova_day`
---
+
 ALTER TABLE `ahmedinova_day`
   MODIFY `day_id` tinyint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
